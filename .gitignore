@@ -1,0 +1,60 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test/cache files
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build/package files
+build/
+dist/
+*.egg-info/
+
+# Local storage/uploads
+storage/
+uploads/
+images/
+test_images/
+
+# AI/model cache files
+.cache/
+models_cache/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Uvicorn/FastAPI reload/debug
+*.pid
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
