@@ -8,6 +8,11 @@ tukaj so funkcije ai komponente, ki dejasno delajo nekej s slikami
 lahko za to naredimo tudi posebej modul, če bodo stvari kompleksne
 """
 
+# "neustrezno"
+UNSUITABLE_THRESHOLD = 0.70
+# "neprepoznano"
+UNKNOWN_THRESHOLD = 0.30
+
 def classify_image_with_clip(image: Image.Image) -> dict:
     
     image_input = preprocess(image).unsqueeze(0).to(device)
@@ -27,20 +32,38 @@ def classify_image_with_clip(image: Image.Image) -> dict:
 
     risky_results = [
         r for r in results
-        if r["label"] in risk_labels and r["score"] >= 0.3
+        if r["label"] in risk_labels
     ]
 
-    if risky_results:
+    highest_risk = max(
+        risky_results,
+        key=lambda r: r["score"],
+        default=None
+    )
+
+    if highest_risk is None:
         return {
-            "decision": "needs_review",
-            "risk_level": "medium",
-            "reasons": risky_results,
+            "decision": "ustrezno",
+            "reasons": [],
+            "all_scores": results
+        }
+
+    if highest_risk["score"] >= UNSUITABLE_THRESHOLD:
+        return {
+            "decision": "neustrezno",
+            "reasons": [highest_risk],
+            "all_scores": results
+        }
+
+    if highest_risk["score"] >= UNKNOWN_THRESHOLD:
+        return {
+            "decision": "neprepoznano",
+            "reasons": [highest_risk],
             "all_scores": results
         }
 
     return {
-        "decision": "approved",
-        "risk_level": "low",
+        "decision": "ustrezno",
         "reasons": [],
         "all_scores": results
     }
