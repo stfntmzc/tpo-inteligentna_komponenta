@@ -24,5 +24,5 @@ def moderate_image(image: Image.Image) -> dict:
         "decision": clip_result["decision"],
         "risk_level": clip_result["risk_level"],
         "reasons": clip_result["reasons"],
-        "clip": clip_result
+        #"clip": clip_result
     }
