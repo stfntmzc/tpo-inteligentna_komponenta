@@ -3,7 +3,7 @@ Del projekta pri predmetu TPO. Sistem za prepoznavanje neprimerne vsebine na sli
 
 ## Kaj trenutno vrača
 
-Trenutno vrača dgvor v obliki
+Trenutno vrača json dgvor v obliki:
 ```json
 {
   "job_id": "f91a0fb7-2f40-432c-8ade-00593c060e21",
