@@ -20,26 +20,7 @@ Trenutno vrača json dgvor v obliki:
 }
 ```
 
-## Deployment inteligentne komponente
-
-### Build Docker image
-Iz root direktorija repozitorija poženi:
-
-```bash
-docker build -t inteligentna-komponenta:latest .
-```
-
-### Zaženi Docker container
-```bash
-docker run -d \
-  --name inteligentna-komponenta \
-  --restart unless-stopped \
-  -p 13000:12000 \
-  inteligentna-komponenta:latest
-```
-Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za moderacoijo je /api/moderate. "Dokumantacija" je na /docs.
-
-## Za nadaljni development
+## Za nadaljni development in lokalni deployment
 Najprej kloniraj repozitorij in se premakni v mapo projekta.
 Nato utvari virtualno okolje:
 ```bash
@@ -79,6 +60,25 @@ curl -X POST "http://127.0.0.1:12000/api/moderate" \
 chmod +x test/test_images.sh
 ./test/test_images.sh
 ```
+
+## Deployment inteligentne komponente
+
+### Build Docker image
+Iz root direktorija repozitorija poženi:
+
+```bash
+docker build -t inteligentna-komponenta:latest .
+```
+
+### Zaženi Docker container
+```bash
+docker run -d \
+  --name inteligentna-komponenta \
+  --restart unless-stopped \
+  -p 13000:12000 \
+  inteligentna-komponenta:latest
+```
+Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za moderacoijo je /api/moderate. "Dokumantacija" je na /docs.
 
 ## Kratka razlaga datotek
 
