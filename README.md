@@ -60,6 +60,8 @@ curl -X POST "http://127.0.0.1:12000/api/moderate" \
 chmod +x test/test_images.sh
 ./test/test_images.sh
 ```
+Testna skripta lahko prejme argument o url-ju, če testeramo ai komponento, ki ne teče lokalno.
+Drugi argumnet je lahko mapa, ker se nahajajo slike, če nočeš testerat default mape.
 
 ## Deployment inteligentne komponente
 
@@ -100,7 +102,22 @@ Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za mod
 │   └── queue
 │       ├── moderation_queue.py - definira FIFO čakalno vrsto in strukturo moderacijskega joba
 │       └── worker.py - jemlje slike iz čakalne vrste in jih pošilja v AI pipeline
+├── README.md - dokumentacija projekta, zagon, testiranje in deployment navodila
 ├── requirements.txt - seznam Python knjižnic, potrebnih za zagon aplikacije
-├── Dockerfile - navodila za izdelavo Docker image-a in zagon aplikacije v kontejnerju
-└── README.md - dokumentacija projekta, zagon, testiranje in deployment navodila
+├── Dockerfile - izdelava Docker image-a in zagon aplikacije v kontejnerju
+└── test
+    ├── images - mapa slik za testeranje
+    │   ├── image01.jpg
+    │   ├── image02.jpg
+    │   ├── image03.png
+    │   ├── image04.jpg
+    │   ├── image05.png
+    │   ├── image06.jpg
+    │   ├── image07.jpg
+    │   ├── image08.jpg
+    │   ├── image09.png
+    │   ├── image10.png
+    │   └── image11.jpg
+    ├── test_images.ps1 - powershel skripta za testeranje slik
+    └── test_images.sh - bash skripta za testeranje slik
 ```
