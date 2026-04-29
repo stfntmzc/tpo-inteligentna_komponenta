@@ -1,6 +1,25 @@
 # TPO inteligentna komponenta (ai sistem za avtomatsko moderacijo slik)
 Del projekta pri predmetu TPO. Sistem za prepoznavanje neprimerne vsebine na slikah za objave za platformo Soseska+
 
+## Kaj trenutno vrača
+
+Trenutno vrača dgvor v obliki
+```json
+{
+  "job_id": "f91a0fb7-2f40-432c-8ade-00593c060e21",
+  "filename": "image10.png",
+  "result": {
+    "decision": "neustrezno",
+    "reasons": [
+      {
+        "label": "a photo of illegal drugs",
+        "score": 0.984631359577179
+      }
+    ]
+  }
+}
+```
+
 ## Deployment inteligentne komponente
 
 ### Build Docker image
