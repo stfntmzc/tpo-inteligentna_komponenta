@@ -19,8 +19,10 @@ Trenutno vrača json dgvor v obliki:
   }
 }
 ```
+"decision" je lahko "neustrezno", "neprepoznano", "ustrezno".
 
 ## Za nadaljni development in lokalni deployment
+(disclamer: nekatere komande tukej so mogoče drugačne na windows)
 Najprej kloniraj repozitorij in se premakni v mapo projekta.
 Nato utvari virtualno okolje:
 ```bash
