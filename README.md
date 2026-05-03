@@ -92,7 +92,7 @@ Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za mod
 │   ├── image_classifier.py - izvaja klasifikacijo slike z AI modelom in vrne rezultate
 │   ├── __init__.py - označi mapo kot Python paket
 │   ├── labels.txt - seznam vseh labelov, s katerimi CLIP primerja sliko
-│   ├── models.py - inicializacija AI modela, preprocesorja, naprave in labelov
+│   ├── models.py - inicializacija AI modela, preprocesorja / gpu-ja, naprave in labelov
 │   ├── moderation.py - glavna AI pipeline funkcija, ki poveže klasifikacijo in odločitev
 │   └── risk_labels.txt - seznam labelov, ki predstavljajo prepovedano ali sumljivo vsebino
 ├── server
