@@ -58,3 +58,7 @@ models_cache/
 
 # Jupyter notebooks checkpoints
 .ipynb_checkpoints/
+
+# Test datasets - ohrani mapo, ne pa vsebine
+test/datasets/*
+!test/datasets/.gitkeep
