@@ -59,6 +59,6 @@ models_cache/
 # Jupyter notebooks checkpoints
 .ipynb_checkpoints/
 
-# Test datasets - ohrani mapo, ne pa vsebine
-test/datasets/*
-!test/datasets/.gitkeep
+# Ignoriraj vse mape znotraj test/datasets,
+# datoteke direktno v test/datasets pa pusti
+test/datasets/*/
