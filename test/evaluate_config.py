@@ -13,23 +13,32 @@ from inteligent_component.moderation import moderate_image
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 
-def load_expected(dataset_dir: Path) -> str:
+def load_expected(dataset_dir: Path) -> set[str]:
     expected_path = dataset_dir / "expected.txt"
 
     if not expected_path.exists():
         raise FileNotFoundError(f"Manjka expected.txt: {expected_path}")
 
-    expected = expected_path.read_text(encoding="utf-8").strip()
-
     allowed_values = {"ustrezno", "neustrezno", "neprepoznano"}
 
-    if expected not in allowed_values:
+    expected_values = {
+        line.strip()
+        for line in expected_path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    }
+
+    invalid_values = expected_values - allowed_values
+
+    if invalid_values:
         raise ValueError(
-            f"Neveljavna expected vrednost: {expected}. "
+            f"Neveljavne expected vrednosti: {invalid_values}. "
             "Uporabi: ustrezno, neustrezno ali neprepoznano."
         )
 
-    return expected
+    if not expected_values:
+        raise ValueError(f"expected.txt je prazen: {expected_path}")
+
+    return expected_values
 
 
 def get_top_reason(result: dict) -> tuple[str, float]:
@@ -95,7 +104,7 @@ def evaluate(config_name: str, dataset_name: str, configs_dir: Path, datasets_di
                 decision = result["decision"]
                 top_label, top_score = get_top_reason(result)
 
-                if decision == expected:
+                if decision in expected:
                     passed += 1
                     print("PASS")
                     out.write(f"{image_path.name}: PASS\n")
