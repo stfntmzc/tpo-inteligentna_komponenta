@@ -57,13 +57,6 @@ Test moderacije slike:
 curl -X POST "http://127.0.0.1:12000/api/moderate" \
   -F "file=@test/images/image01.jpg"
 ```
-Če želiš testirati več slik iz mape test/images, lahko uporabiš testno skripto:
-```bash
-chmod +x test/test_images.sh
-./test/test_images.sh
-```
-Testna skripta lahko prejme argument o url-ju, če testeramo ai komponento, ki ne teče lokalno.
-Drugi argumnet je lahko mapa, ker se nahajajo slike, če nočeš testerat default mape.
 
 ## Deployment inteligentne komponente
 
@@ -84,42 +77,71 @@ docker run -d \
 ```
 Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za moderacoijo je /api/moderate. "Dokumantacija" je na /docs.
 
+## Testiranje in konfiguracije
+
+Beri README.md v mapi test/.
+
 ## Kratka razlaga datotek
 
 ```text
 .
+├── Dockerfile - izdelava Docker image-a in zagon aplikacije v kontejnerju
 ├── inteligent_component
-│   ├── image_classifier.py - izvaja klasifikacijo slike z AI modelom in vrne rezultate
-│   ├── __init__.py - označi mapo kot Python paket
-│   ├── labels.txt - seznam vseh labelov, s katerimi CLIP primerja sliko
-│   ├── models.py - inicializacija AI modela, preprocesorja, naprave in labelov
-│   ├── moderation.py - glavna AI pipeline funkcija, ki poveže klasifikacijo in odločitev
-│   └── risk_labels.txt - seznam labelov, ki predstavljajo prepovedano ali sumljivo vsebino
+│   ├── config
+│   │   ├── labels.txt - produkcijski seznam vseh labelov, s katerimi CLIP primerja sliko
+│   │   ├── risk_labels.txt - produkcijski seznam labelov, ki predstavljajo prepovedano ali sumljivo vsebino
+│   │   └── threshold.txt - produkcijski pragovi za odločanje: neprepoznano in neustrezno
+│   ├── config.py - branje konfiguracije iz datotek labels.txt, risk_labels.txt in threshold.txt
+│   ├── image_classifier.py - izvaja klasifikacijo slike z AI modelom in vrne odločitev ter razloge
+│   ├── __init__.py - označi mapo inteligent_component kot Python paket
+│   ├── models.py - inicializacija CLIP modela, preprocesorja in naprave CPU/GPU
+│   └── moderation.py - glavna AI pipeline funkcija, ki poveže konfiguracijo, klasifikacijo in odločitev
+├── README.md - glavna dokumentacija projekta, zagon, testiranje in deployment navodila
+├── requirements.txt - seznam Python knjižnic, potrebnih za zagon aplikacije
 ├── server
 │   ├── api
 │   │   ├── __init__.py - označi api mapo kot Python paket
-│   │   └── routes.py - definira API endpoint-e in usmerja requeste
+│   │   └── routes.py - definira FastAPI endpoint-e in sprejema requeste za moderacijo slik
 │   ├── __init__.py - označi server mapo kot Python paket
-│   ├── main.py - inicializacija FastAPI strežnika in zagon workerja
+│   ├── main.py - inicializacija FastAPI strežnika in zagon background workerja
 │   └── queue
 │       ├── moderation_queue.py - definira FIFO čakalno vrsto in strukturo moderacijskega joba
-│       └── worker.py - jemlje slike iz čakalne vrste in jih pošilja v AI pipeline
-├── README.md - dokumentacija projekta, zagon, testiranje in deployment navodila
-├── requirements.txt - seznam Python knjižnic, potrebnih za zagon aplikacije
-├── Dockerfile - izdelava Docker image-a in zagon aplikacije v kontejnerju
+│       └── worker.py - jemlje slike iz čakalne vrste, jih pošlje v AI pipeline in vrne rezultat
 └── test
-    ├── images - mapa slik za testeranje
-    │   ├── image01.jpg
-    │   ├── image02.jpg
-    │   ├── image03.png
-    │   ├── image04.jpg
-    │   ├── image05.png
-    │   ├── image06.jpg
-    │   ├── image07.jpg
-    │   ├── image08.jpg
-    │   ├── image09.png
-    │   ├── image10.png
-    │   └── image11.jpg
-    ├── test_images.ps1 - powershel skripta za testeranje slik
-    └── test_images.sh - bash skripta za testeranje slik
+    ├── configs
+    │   ├── conf1
+    │   │   ├── labels.txt - testni seznam vseh labelov za konfiguracijo conf1
+    │   │   ├── risk_labels.txt - testni seznam risk labelov za konfiguracijo conf1
+    │   │   └── threshold.txt - testni pragovi za konfiguracijo conf1
+    │   ├── conf2
+    │   │   ├── labels.txt
+    │   │   ├── risk_labels.txt
+    │   │   └── threshold.txt
+    │   └── ... - ostale testne konfiguracije
+    ├── configurations_evaluation_result.txt - rezultat primerjave več konfiguracij; ena accuracy vrednost na vrstico
+    ├── configurations_to_evaluate.txt - seznam konfiguracij, ki jih evaluate_configurations.py požene eno za drugo
+    ├── datasets
+    │   ├── appropriate1
+    │   │   ├── expected.txt - pravilni pričakovani odgovori za ta dataset, npr. ustrezno
+    │   │   ├── images - slike za testiranje primernih objav
+    │   │   └── result_confX.txt - rezultati testiranja posameznih konfiguracij na tem datasetu
+    │   ├── appropriate2
+    │   │   ├── expected.txt
+    │   │   ├── images
+    │   │   └── result_confX.txt
+    │   ├── inappropriate1
+    │   │   ├── expected.txt - pravilni pričakovani odgovori za ta dataset, npr. neustrezno in neprepoznano
+    │   │   ├── images - slike za testiranje neprimernih objav
+    │   │   └── result_confX.txt - rezultati testiranja posameznih konfiguracij na tem datasetu
+    │   └── inappropriate2
+    │       ├── expected.txt
+    │       ├── images
+    │       └── result_confX.txt
+    ├── evaluate_config.py - testira eno konfiguracijo nad enim datasetom in zapiše podroben rezultat
+    ├── evaluate_configurations.py - prebere configurations_to_evaluate.txt in požene evaluate_config.py za več konfiguracij
+    ├── quick_test
+    │   ├── images - slike za hitro testiranje API endpointa
+    │   ├── test_images.ps1 - PowerShell skripta za testiranje API endpointa na Windows
+    │   └── test_images.sh - Bash skripta za testiranje API endpointa na Linuxu
+    └── README.md - dokumentacija za testiranje konfiguracij, datasetov in quick test skript
 ```
