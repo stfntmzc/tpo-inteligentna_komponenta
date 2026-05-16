@@ -60,38 +60,9 @@ test/
 │   └── ...
 ```
 
-Primer labels.txt:
-```text
-a photo of a harmless object
-a photo of a household item
-a photo of a weapon
-a photo of illegal drugs
-a photo of alcohol
-a photo of a person
-a photo of a child
-```
-
-Primer risk_labels.txt:
-```text
-a photo of a weapon
-a photo of illegal drugs
-a photo of alcohol
-a photo of a person
-a photo of a child
-```
-
-Primer threshold.txt:
-```text
-0.2
-0.7
-```
-
 ### datasets/
 
-Mapa datasets/ vsebuje testne datasete slik. Vsak dataset ima:
-
-expected.txt
-images/
+Mapa datasets/ vsebuje testne datasete slik. Vsak dataset ima expected.txt, images/
 
 expected.txt pove, kateri odgovori AI komponente se štejejo kot pravilni za ta dataset.
 
@@ -109,3 +80,55 @@ Mapa quick_test/ je namenjena hitremu testiranju API endpointa z curl. Te skript
 
 To ni enako kot evaluate_config.py.
 quick_test testira API, evaluate_config.py pa testira AI pipeline direktno v Pythonu brez HTTP requestov.
+
+## Konfiguracije
+
+Vsaka konfiguracija mora imeti tri datoteke:
+
+- labels.txt
+- risk_labels.txt
+- threshold.txt
+
+### labels.txt
+
+Vsebuje vse labele, s katerimi CLIP primerja sliko.
+
+Primer:
+```text
+a photo of a harmless object
+a photo of a household item
+a photo of a weapon
+a photo of illegal drugs
+a photo of alcohol
+a photo of a person
+```
+
+### risk_labels.txt
+
+Vsebuje samo tiste labele, ki predstavljajo sumljivo ali prepovedano vsebino.
+
+Primer:
+```text
+a photo of a weapon
+a photo of illegal drugs
+a photo of alcohol
+a photo of a person
+```
+
+Pomembno: label, ki je v risk_labels.txt, mora obstajati tudi v labels.txt.
+
+### threshold.txt
+
+Vsebuje dva praga:
+- Prva vrstica pomeni prag za neprepoznano.
+- Druga vrstica pomeni prag za neustrezno.
+
+Primer:
+```text
+0.3
+0.7
+```
+Pomen:
+- score < 0.3 → ustrezno
+- 0.3 <= score < 0.7 → neprepoznano
+- score >= 0.7 → neustrezno
