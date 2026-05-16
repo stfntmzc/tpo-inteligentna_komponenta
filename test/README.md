@@ -38,7 +38,7 @@ threshold.txt
 ```
 
 ### Slike
-Vsak dataset daš v svojo mapo znotraj test/datasets/, v njej naj se nahaja expected.txt in mapa images.
+Vsak dataset daš v svojo mapo znotraj test/datasets/ (mapo datasets moraš ustvarit), v njej naj se nahaja expected.txt in mapa images.
 ```text
 test/datasets/inappropriate1/
 ├── expected.txt <- pričakovan rezultat
