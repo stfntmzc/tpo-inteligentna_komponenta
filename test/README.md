@@ -268,5 +268,27 @@ Vsaka vrstica mora ustrezati mapi v:
 
 test/configs/
 
-Če je v datoteki zapisano: config3
-mora obstajati mapa: test/configs/config3/
+Če je v datoteki zapisano: config3 => mora obstajati mapa: test/configs/config3/
+
+## configurations_evaluation_result.txt
+
+To datoteko ustvari skripta evaluate_configurations.py.
+
+V njej so zapisane samo accuracy vrednosti, ena na vrstico.
+
+Primer:
+Če imamo v configurations_to_evaluate.txt vsebino:
+```text
+config1
+config2
+config3
+```
+in v configurations_evaluation_result.txt:
+```text
+0.9462
+0.9032
+0.8710
+```
+ima config1 natančnost 0.9462, config2 0.9032 in config3 0.8710.
+
+To je uporabno za hitro kopiranje v Google Sheets.
