@@ -2,6 +2,97 @@
 
 Mapa `test/` vsebuje skripte, konfiguracije in datasete za testiranje natančnosti inteligentne komponente. Namen testiranja je primerjati različne kombinacije labelov, risk labelov in thresholdov ter ugotoviti, katera konfiguracija najbolje loči primerne in neprimerne slike.
 
+## Hitri vodič za testeranje
+
+### Konfiguracije
+Konfiguracijo (ali več konfiguracij, vsako v svojo mapo) daš v svojo mapo znotraj test/configs/, v njej naj se nahajo 3 datoteke.
+```text
+test/configs/config1/
+├── labels.txt <- labeli, ki jih CLIP uporablja za primerjavo slike
+├── risk_labels.txt <- labeli, ki pomenijo tveganje
+└── threshold.txt <- pragovi
+```
+Primeri:
+labels.txt:
+```text
+a photo of a harmless object
+a photo of a household item
+a photo of a weapon
+a photo of illegal drugs
+a photo of alcohol
+a photo of a person
+a photo of a child
+```
+risk_labels.txt:
+```text
+a photo of a weapon
+a photo of illegal drugs
+a photo of alcohol
+a photo of a person
+a photo of a child
+```
+threshold.txt
+```text
+0.3
+0.7
+```
+
+### Slike
+Vsak dataset daš v svojo mapo znotraj test/datasets/, v njej naj se nahaja expected.txt in mapa images.
+```text
+test/datasets/inappropriate1/
+├── expected.txt <- pričakovan rezultat
+└── images/ <- slike
+    ├── 1.jpg
+    ├── 2.png
+    └── ...
+```
+Primer expected.txt:
+```text
+neustrezno
+neprepoznano
+```
+To pomeni, če AI na sliko odgovori z neustrezno ali neprepoznano, se bo odgovor štel kot pravilen.
+
+### Testiranje ene konfiguracije
+
+Za testiranje ene konfiguracije iz root mape projekta zaženeš:
+```text
+python test/evaluate_config.py config1 inappropriate1
+```
+To pomeni:
+- uporabi konfiguracijo: test/configs/config1/
+- uporabi dataset: test/datasets/inappropriate1/
+
+Rezultat se shrani v test/datasets/inappropriate1/result_config1.txt
+
+### Testiranje več konfiguracij
+
+V datoteko test/configurations_to_evaluate.txt, na primer:
+```text
+config1
+config2
+config3
+config4
+```
+
+Nato zaženeš:
+```text
+python test/evaluate_configurations.py inappropriate1
+```
+
+To pomeni:
+- uporabi dataset: test/datasets/inappropriate1/
+
+Rezultati se zapišejo v test/configurations_evaluation_result.txt
+Vsebina bo na primer:
+```text
+0.92
+0.85
+0.73
+0.94
+```
+
 ## Struktura mape
 
 ```text
@@ -318,5 +409,6 @@ bash test/quick_test/test_images.sh http://127.0.0.1:12000/api/moderate test/qui
 ```
 
 Na Windows lahko uporabiš PowerShell skripto:
-
+```text
 .\test\quick_test\test_images.ps1
+```
