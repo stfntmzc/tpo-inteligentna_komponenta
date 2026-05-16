@@ -68,10 +68,11 @@ test/datasets/*
 !test/datasets/example_inappropriate/images
 !test/datasets/example_inappropriate/expected.txt
 
-# Testne konfiguracije - ne pushaj vseh eksperimentov
+# Testne konfiguracije - ignoriraj vse eksperimente
 test/configs/*
-# Pusti samo primer konfiguracije, če ga želiš imeti na GitHubu
-!test/configs/example_config
+
+# Pusti samo example_config
+!test/configs/example_config/
 !test/configs/example_config/labels.txt
 !test/configs/example_config/risk_labels.txt
 !test/configs/example_config/threshold.txt
