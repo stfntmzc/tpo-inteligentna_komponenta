@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 API_URL="${1:-http://127.0.0.1:12000/api/moderate}"
-IMAGE_DIR="${2:-test/images}"
+IMAGE_DIR="${2:-test/quick_test/images}"
 
 echo "Testing images from: $IMAGE_DIR"
 echo "API endpoint: $API_URL"
