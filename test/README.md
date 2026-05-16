@@ -249,3 +249,24 @@ python test/evaluate_config.py config1 inappropriate1
 ```text
 PYTHONPATH=. python test/evaluate_config.py config1 inappropriate1
 ```
+
+## configurations_to_evaluate.txt
+
+Ta datoteka vsebuje seznam konfiguracij, ki jih želiš primerjati.
+
+Primer:
+```text
+config1
+config2
+config3
+config4
+config5
+config6
+config7
+```
+Vsaka vrstica mora ustrezati mapi v:
+
+test/configs/
+
+Če je v datoteki zapisano: config3
+mora obstajati mapa: test/configs/config3/
