@@ -132,3 +132,53 @@ Pomen:
 - score < 0.3 → ustrezno
 - 0.3 <= score < 0.7 → neprepoznano
 - score >= 0.7 → neustrezno
+
+## Dataseti
+
+Vsak dataset mora imeti takšno strukturo:
+```text
+test/datasets/ime_dataseta/
+├── expected.txt
+└── images/
+    ├── 1.jpg
+    ├── 2.png
+    └── ...
+```
+
+Slike morajo biti v mapi images/.
+
+Podprte končnice so:
+
+- .jpg
+- .jpeg
+- .png
+- .webp
+
+### expected.txt
+
+Datoteka expected.txt določa, kateri odgovori AI komponente se štejejo kot pravilni.
+
+Dovoljene vrednosti so:
+
+- ustrezno
+- neustrezno
+- neprepoznano
+
+Možno je zapisati tudi več pravilnih odgovorov, vsakega v svojo vrstico.
+
+Primer za dataset neprimernih slik:
+```text
+neustrezno
+neprepoznano
+```
+
+To pomeni, da se šteje kot pravilno, če AI sliko označi kot neustrezno ali neprepoznano.
+
+To je smiselno, ker se v obeh primerih objava ne objavi direktno, ampak gre v administratorski pregled ali pa se zavrne.
+
+Primer za dataset primernih slik:
+```text
+ustrezno
+```
+To pomeni, da mora AI sliko označiti kot ustrezno. Če jo označi kot neustrezno ali neprepoznano, se to šteje kot napačen rezultat.
+
