@@ -80,6 +80,12 @@ a photo of a person
 a photo of a child
 ```
 
+Primer threshold.txt:
+```text
+0.2
+0.7
+```
+
 ### datasets/
 
 Mapa datasets/ vsebuje testne datasete slik. Vsak dataset ima:
