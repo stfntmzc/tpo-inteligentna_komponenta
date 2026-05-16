@@ -292,3 +292,31 @@ in v configurations_evaluation_result.txt:
 ima config1 natančnost 0.9462, config2 0.9032 in config3 0.8710.
 
 To je uporabno za hitro kopiranje v Google Sheets.
+
+## Quick test API endpointa
+
+Mapa quick_test/ je namenjena testiranju že zagnanega API-ja.
+
+Pred tem mora biti server zagnan, na primer:
+```text
+uvicorn server.main:app --reload --host 127.0.0.1 --port 12000
+```
+
+Nato lahko zaženeš:
+```text
+bash test/quick_test/test_images.sh
+```
+
+Privzeti endpoint je:
+```text
+http://127.0.0.1:12000/api/moderate
+```
+
+Lahko pa podaš svoj endpoint in mapo slik:
+```text
+bash test/quick_test/test_images.sh http://127.0.0.1:12000/api/moderate test/quick_test/images
+```
+
+Na Windows lahko uporabiš PowerShell skripto:
+
+.\test\quick_test\test_images.ps1
