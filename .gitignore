@@ -59,6 +59,19 @@ models_cache/
 # Jupyter notebooks checkpoints
 .ipynb_checkpoints/
 
-# Ignoriraj vse mape znotraj test/datasets,
-# datoteke direktno v test/datasets pa pusti
-test/datasets/*/
+# Ignoriraj vse mape znotraj test/datasets
+test/datasets/*
+!test/datasets/example_appropriate/
+!test/datasets/example_appropriate/images
+!test/datasets/example_appropriate/expected.txt
+!test/datasets/example_inappropriate/
+!test/datasets/example_inappropriate/images
+!test/datasets/example_inappropriate/expected.txt
+
+# Testne konfiguracije - ne pushaj vseh eksperimentov
+test/configs/*
+# Pusti samo primer konfiguracije, če ga želiš imeti na GitHubu
+!test/configs/example_config
+!test/configs/example_config/labels.txt
+!test/configs/example_config/risk_labels.txt
+!test/configs/example_config/threshold.txt
