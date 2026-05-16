@@ -182,3 +182,70 @@ ustrezno
 ```
 To pomeni, da mora AI sliko označiti kot ustrezno. Če jo označi kot neustrezno ali neprepoznano, se to šteje kot napačen rezultat.
 
+## Skripta evaluate_config.py
+
+Skripta evaluate_config.py testira eno konfiguracijo nad enim datasetom.
+
+Primer:
+```text
+python test/evaluate_config.py config1 inappropriate1
+```
+
+To pomeni:
+- uporabi konfiguracijo: test/configs/config1/
+- uporabi dataset: test/datasets/inappropriate1/
+
+Skripta za vsako sliko:
+
+- odpre sliko,
+- požene AI moderacijo,
+- primerja rezultat z vrednostmi v expected.txt,
+- zapiše PASS ali FAIL.
+
+Rezultat se shrani v datoteko:
+
+test/datasets/inappropriate1/result_config1.txt
+
+Primer izpisa v terminalu:
+```text
+[1/3] Testing 1.png ... PASS
+[2/3] Testing 2.png ... PASS
+[3/3] Testing 3.jpg ... FAIL
+```
+Primer vsebine rezultata:
+
+config: config1
+dataset: inappropriate1
+expected: neprepoznano, neustrezno
+unknown_threshold: 0.3
+unsuitable_threshold: 0.7
+```text
+results:
+1.png: PASS
+3.png: PASS
+-------------
+5.jpg: FAIL
+result: ustrezno
+expected: neprepoznano, neustrezno
+top label: "a photo of a firearm"
+score: 0.15
+-------------
+
+summary:
+total: 3
+passed: 2
+failed: 1
+errors: 0
+accuracy: 0.6667
+```
+
+Zagon testa za eno konfiguracijo
+
+Iz root mape projekta:
+```text
+python test/evaluate_config.py config1 inappropriate1
+```
+Če Python ne najde paketa inteligent_component, lahko uporabiš:
+```text
+PYTHONPATH=. python test/evaluate_config.py config1 inappropriate1
+```
