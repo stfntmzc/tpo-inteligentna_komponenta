@@ -1,6 +1,7 @@
 # Testiranje AI konfiguracij
 
 Mapa `test/` vsebuje skripte, konfiguracije in datasete za testiranje natančnosti inteligentne komponente. Namen testiranja je primerjati različne kombinacije labelov, risk labelov in thresholdov ter ugotoviti, katera konfiguracija najbolje loči primerne in neprimerne slike.
+(PRIPOROČENA JE UPORABA VIRETUALNEGA OKOLJA)
 
 ## Hitri vodič za testeranje
 
