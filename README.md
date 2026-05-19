@@ -59,7 +59,7 @@ curl http://127.0.0.1:12000/api/
 Test moderacije slike:
 ```text
 curl -X POST "http://127.0.0.1:12000/api/moderate" \
-  -H "X-API-Key: primerapiklica123" \
+  -H "API-Key: primerapiklica123" \
   -F "file=@test/quick_test/images/image01.jpg"
 ```
 
