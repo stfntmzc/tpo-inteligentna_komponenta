@@ -16,3 +16,4 @@ git+https://github.com/openai/CLIP.git
 # fast api ===================
 
 fastapi[standard]==0.113.0
+python-dotenv

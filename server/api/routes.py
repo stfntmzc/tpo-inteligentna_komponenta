@@ -1,8 +1,12 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+
+from server.api.auth import verify_api_key
 from server.queue.moderation_queue import moderation_queue, create_job
 
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(verify_api_key)]
+)
 
 
 @router.get("/")

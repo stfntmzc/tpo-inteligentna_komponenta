@@ -24,6 +24,10 @@ Trenutno vrača json dgvor v obliki:
 ## Za nadaljni development in lokalni deployment
 (disclamer: nekatere komande tukej so mogoče drugačne na windows)
 Najprej kloniraj repozitorij in se premakni v mapo projekta.
+V root direktoriju naredi .env datoteko z API ključem, naprimer:
+```text
+API_KEY=12345678901234567890123456789012
+```
 Nato utvari virtualno okolje:
 ```bash
 python3 -m venv .venv
@@ -55,7 +59,8 @@ curl http://127.0.0.1:12000/api/
 Test moderacije slike:
 ```text
 curl -X POST "http://127.0.0.1:12000/api/moderate" \
-  -F "file=@test/images/image01.jpg"
+  -H "X-API-Key: primerapiklica123" \
+  -F "file=@test/quick_test/images/image01.jpg"
 ```
 
 ## Deployment inteligentne komponente
@@ -73,6 +78,7 @@ docker run -d \
   --name inteligentna-komponenta \
   --restart unless-stopped \
   -p 13000:12000 \
+  --env-file .env \
   inteligentna-komponenta:latest
 ```
 Po tem je inteligentna komponenta dosegljiva na localhost:13000. Endpoint za moderacoijo je /api/moderate. "Dokumantacija" je na /docs.
@@ -85,6 +91,7 @@ Beri README.md v mapi test/.
 
 ```text
 .
+├── .env - enviorment file z api ključem
 ├── Dockerfile - izdelava Docker image-a in zagon aplikacije v kontejnerju
 ├── inteligent_component
 │   ├── config
