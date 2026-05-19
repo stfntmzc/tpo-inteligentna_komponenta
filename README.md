@@ -26,7 +26,7 @@ Trenutno vrača json dgvor v obliki:
 Najprej kloniraj repozitorij in se premakni v mapo projekta.
 V root direktoriju naredi .env datoteko z API ključem, naprimer:
 ```text
-API_KEY=12345678901234567890123456789012
+API_KEY=primerapikljuca123
 ```
 Nato utvari virtualno okolje:
 ```bash
